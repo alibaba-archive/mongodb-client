@@ -1,6 +1,14 @@
-sudo: false
+sudo: required
+env:
+  - npm_registry=https://registry.npmjs.com
 services:
   - mongodb
+addons:
+  apt:
+    sources:
+      - mongodb-3.0-precise
+    packages:
+      - mongodb-org-server
 language: node_js
 node_js:
   - '5'
