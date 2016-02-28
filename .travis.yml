@@ -1,4 +1,3 @@
-sudo: required
 env:
   - npm_registry=https://registry.npmjs.com
 services:
