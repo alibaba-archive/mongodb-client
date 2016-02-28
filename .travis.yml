@@ -1,16 +1,19 @@
 sudo: required
 env:
   - npm_registry=https://registry.npmjs.com
-services:
-  - mongodb
 language: node_js
 node_js:
   - '5'
   - '4'
 install:
+  - curl https://fastdl.mongodb.org/osx/mongodb-osx-x86_64-3.0.9.tgz | tar zxf
+  - mkdir -p ./data/db
+  - nohup mongodb-osx-x86_64-3.0.9/bin/mongod --dbpath=./data/db --smallfiles > mongod.log 2>&1 &
   - npm i npminstall
   - npminstall
+  - cat mongod.log
 script:
   - npm run ci
+  - cat mongod.log
 after_script:
   - npminstall codecov && codecov
