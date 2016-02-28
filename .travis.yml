@@ -6,9 +6,9 @@ node_js:
   - '5'
   - '4'
 install:
-  - curl https://fastdl.mongodb.org/osx/mongodb-osx-x86_64-3.0.9.tgz | tar -zxv
+  - curl https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.9.tgz | tar -zxv
   - mkdir -p ./data/db
-  - nohup mongodb-osx-x86_64-3.0.9/bin/mongod --dbpath=./data/db --smallfiles > mongod.log 2>&1 &
+  - nohup mongodb-linux-x86_64-3.0.9/bin/mongod --dbpath=./data/db --smallfiles > mongod.log 2>&1 &
   - npm i npminstall
   - npminstall
   - cat mongod.log

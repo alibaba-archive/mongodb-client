@@ -97,6 +97,56 @@ describe('test/index.test.js', function() {
       assert.equal(result.ops[0]._id, result.insertedId);
       assert(result.insertedId);
     });
+
+    it('should insert parallel work', function*() {
+      const rs = yield [
+        this.db.collection(collectionName).insertOne({
+          name: 'fengmk2-parallel-0',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }),
+        this.db.collection(collectionName).insertOne({
+          name: 'fengmk2-parallel-1',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }),
+      ];
+      assert.equal(rs.length, 2);
+      for (const result of rs) {
+        assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+        assert.deepEqual(result.result, { ok: 1, n: 1 });
+        assert.equal(result.insertedCount, 1);
+        assert.equal(result.ops.length, 1);
+        assert.equal(result.ops[0]._id, result.insertedId);
+        assert(result.insertedId);
+      }
+    });
+
+    it('should insert serial work', function*() {
+      let result = yield this.db.collection(collectionName).insertOne({
+        name: 'fengmk2-serial-0',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+      assert.deepEqual(result.result, { ok: 1, n: 1 });
+      assert.equal(result.insertedCount, 1);
+      assert.equal(result.ops.length, 1);
+      assert.equal(result.ops[0]._id, result.insertedId);
+      assert(result.insertedId);
+
+      result = yield this.db.collection(collectionName).insertOne({
+        name: 'fengmk2-serial-1',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+      assert.deepEqual(result.result, { ok: 1, n: 1 });
+      assert.equal(result.insertedCount, 1);
+      assert.equal(result.ops.length, 1);
+      assert.equal(result.ops[0]._id, result.insertedId);
+      assert(result.insertedId);
+    });
   });
 
   describe('insertMany()', function() {
