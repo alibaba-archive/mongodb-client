@@ -55,9 +55,13 @@ db.ready(() => {
       { name: 'dead-horse', type: 'JavaScript' },
       { name: 'tj', type: 'go' },
     ]);
+    console.log(result);
 
     const docs = yield db.collection('user').find({ type: 'JavaScript' }).skip(10).toArray();
     console.log(docs);
+  }).catch(err => {
+    console.error(err);
+    console.error(err.stack);
   });
 });
 ```
