@@ -14,7 +14,7 @@
 
 const assert = require('assert');
 const config = require('./config');
-const MongoDB = require('..');
+const MongoDB = require('../');
 
 describe('test/index.test.js', function() {
   before(function(done) {
