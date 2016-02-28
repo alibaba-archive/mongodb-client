@@ -3,12 +3,6 @@ env:
   - npm_registry=https://registry.npmjs.com
 services:
   - mongodb
-addons:
-  apt:
-    sources:
-      - mongodb-3.0-precise
-    packages:
-      - mongodb-org-server
 language: node_js
 node_js:
   - '5'
@@ -16,9 +10,6 @@ node_js:
 install:
   - npm i npminstall
   - npminstall
-before_script:
-  - sleep 15
-  - mongo mydb_test --eval 'db.addUser("travis", "test");'
 script:
   - npm run ci
 after_script:

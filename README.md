@@ -20,6 +20,15 @@ mongodb-client
 
 A nice API client for MongoDB.
 
+## Features
+
+- Make API as same as [MongoDB CRUD Reference](https://docs.mongodb.org/manual/reference/crud/)
+- Reading the source codes just like reading the document of MongoDB client.
+- Fix native mongodb `insertedIds` data format error on `options.ordered = false`.
+- Remove `insert()` method, please use the more clear `insertMany()` and `insertOne()` instead.
+- Disable `options.forceServerObjectId` on write methods.
+- ...
+
 ## Installation
 
 ```bash
@@ -33,11 +42,23 @@ const co = require('co');
 const MongoDB = require('mongodb-client');
 
 const db = new MongoDB('mongodb://localhost:27017/myproject');
+// listen db connect error event
+db.on('error', err => {
+  console.error(err);
+});
+// wait for db connected
+db.ready(() => {
+  // let's read and write
+  co(function*() {
+    const result = yield db.collection('user').insertMany([
+      { name: 'fengmk2', type: 'JavaScript' },
+      { name: 'dead-horse', type: 'JavaScript' },
+      { name: 'tj', type: 'go' },
+    ]);
 
-co(function*() {
-  const cursor = db.find({ type: 'JavaScript' }).skip(10);
-  const docs = yield cursor.toArray();
-  console.log(docs);
+    const docs = yield db.collection('user').find({ type: 'JavaScript' }).skip(10).toArray();
+    console.log(docs);
+  });
 });
 ```
 

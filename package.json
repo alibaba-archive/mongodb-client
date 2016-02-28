@@ -2,26 +2,31 @@
   "name": "mongodb-client",
   "version": "0.0.0",
   "description": "A nice API client for MongoDB.",
-  "main": "index.js",
+  "main": "lib/DataBase.js",
   "files": [
     "index.js"
   ],
   "scripts": {
-    "test": "npm run lint && mocha -t 5000 test/*.test.js",
-    "test-cov": "istanbul cover _mocha -- -t 5000 test/*.test.js",
+    "test": "npm run lint && mocha -t 5000 -r thunk-mocha test/*.test.js",
+    "test-local": "mocha -t 5000 -r thunk-mocha test/*.test.js",
+    "test-cov": "istanbul cover _mocha -- -t 5000 -r thunk-mocha test/*.test.js",
     "lint": "eslint .",
     "ci": "npm run lint && npm run test-cov",
     "autod": "autod -w --prefix '~'"
   },
   "dependencies": {
-
+    "mongodb": "^2.1.7",
+    "sdk-base": "^1.1.0",
+    "debug": "^2.2.0",
+    "depd": "^1.1.0"
   },
   "devDependencies": {
     "autod": "*",
     "eslint": "1",
     "eslint-config-egg": "1",
     "istanbul": "*",
-    "mocha": "*"
+    "mocha": "^2.4.5",
+    "thunk-mocha": "^1.0.3"
   },
   "homepage": "https://github.com/node-modules/mongodb-client",
   "repository": {
