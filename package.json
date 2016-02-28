@@ -24,7 +24,7 @@
     "autod": "*",
     "eslint": "1",
     "eslint-config-egg": "1",
-    "istanbul": "*",
+    "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
     "thunk-mocha": "^1.0.3",
     "co": "^4.6.0"
