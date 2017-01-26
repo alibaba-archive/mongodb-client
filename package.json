@@ -1,6 +1,6 @@
 {
   "name": "mongodb-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A nice API client for MongoDB.",
   "main": "lib/DataBase.js",
   "files": [
