@@ -1,16 +1,4 @@
-/**
- * Copyright(c) node-modules and other contributors.
- * MIT Licensed
- *
- * Authors:
- *   fengmk2 <m@fengmk2.com> (http://fengmk2.com)
- */
-
 'use strict';
-
-/**
- * Module dependencies.
- */
 
 const assert = require('assert');
 const config = require('./config');
@@ -23,7 +11,7 @@ describe('test/index.test.js', function() {
   });
 
   describe('admin()', function() {
-    it('should check master status ok', function*() {
+    it('should check master status ok', function* () {
       const result = yield this.db.admin().command({ isMaster: 1 });
       // { ismaster: true,
       //   maxBsonObjectSize: 16777216,
@@ -41,13 +29,13 @@ describe('test/index.test.js', function() {
   describe('insertOne()', function() {
     const collectionName = 'test_insert_one';
 
-    it('should insert a new row', function*() {
+    it('should insert a new row', function* () {
       const result = yield this.db.collection(collectionName).insertOne({
         name: 'fengmk2',
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'message', 'ops', 'insertedCount', 'insertedId' ]);
       assert.deepEqual(result.result, { ok: 1, n: 1 });
       assert.equal(result.insertedCount, 1);
       assert.equal(result.ops.length, 1);
@@ -63,7 +51,7 @@ describe('test/index.test.js', function() {
       // insertedId: 56d2fb320daeaf20ce51ddf3 }
     });
 
-    it('should disable forceServerObjectId: true option', function*() {
+    it('should disable forceServerObjectId: true option', function* () {
       const result = yield this.db.collection(collectionName).insertOne({
         name: 'fengmk2',
         createdAt: new Date(),
@@ -71,7 +59,7 @@ describe('test/index.test.js', function() {
       }, {
         forceServerObjectId: true,
       });
-      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'message', 'ops', 'insertedCount', 'insertedId' ]);
       assert.deepEqual(result.result, { ok: 1, n: 1 });
       assert.equal(result.insertedCount, 1);
       assert.equal(result.ops.length, 1);
@@ -79,7 +67,7 @@ describe('test/index.test.js', function() {
       assert(result.insertedId);
     });
 
-    it('should work with options.writeConcern.w = 0', function*() {
+    it('should work with options.writeConcern.w = 0', function* () {
       const result = yield this.db.collection(collectionName).insertOne({
         name: 'fengmk2',
         createdAt: new Date(),
@@ -89,7 +77,7 @@ describe('test/index.test.js', function() {
           w: 0,
         },
       });
-      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'message', 'ops', 'insertedCount', 'insertedId' ]);
       assert.deepEqual(result.result, { ok: 1 });
       // wont wait write acknowledge result return, so result dont know how the insert success or not
       assert.equal(result.insertedCount, undefined);
@@ -98,7 +86,7 @@ describe('test/index.test.js', function() {
       assert(result.insertedId);
     });
 
-    it('should insert parallel work', function*() {
+    it('should insert parallel work', function* () {
       const rs = yield [
         this.db.collection(collectionName).insertOne({
           name: 'fengmk2-parallel-0',
@@ -113,7 +101,7 @@ describe('test/index.test.js', function() {
       ];
       assert.equal(rs.length, 2);
       for (const result of rs) {
-        assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+        assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'message', 'ops', 'insertedCount', 'insertedId' ]);
         assert.deepEqual(result.result, { ok: 1, n: 1 });
         assert.equal(result.insertedCount, 1);
         assert.equal(result.ops.length, 1);
@@ -122,13 +110,13 @@ describe('test/index.test.js', function() {
       }
     });
 
-    it('should insert serial work', function*() {
+    it('should insert serial work', function* () {
       let result = yield this.db.collection(collectionName).insertOne({
         name: 'fengmk2-serial-0',
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'message', 'ops', 'insertedCount', 'insertedId' ]);
       assert.deepEqual(result.result, { ok: 1, n: 1 });
       assert.equal(result.insertedCount, 1);
       assert.equal(result.ops.length, 1);
@@ -140,7 +128,7 @@ describe('test/index.test.js', function() {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'ops', 'insertedCount', 'insertedId' ]);
+      assert.deepEqual(Object.keys(result), [ 'result', 'connection', 'message', 'ops', 'insertedCount', 'insertedId' ]);
       assert.deepEqual(result.result, { ok: 1, n: 1 });
       assert.equal(result.insertedCount, 1);
       assert.equal(result.ops.length, 1);
@@ -152,7 +140,7 @@ describe('test/index.test.js', function() {
   describe('insertMany()', function() {
     const collectionName = 'test_insert_many';
 
-    it('should insert two new row', function*() {
+    it('should insert two new row', function* () {
       const result = yield this.db.collection(collectionName).insertMany([
         {
           name: 'fengmk2',
@@ -186,7 +174,7 @@ describe('test/index.test.js', function() {
       //  [ 56d2fe1e86d73ac4ce50a18a, 56d2fe1e86d73ac4ce50a18b ] }
     });
 
-    it('should insert with options.ordered = false', function*() {
+    it('should insert with options.ordered = false', function* () {
       const result = yield this.db.collection(collectionName).insertMany([
         {
           name: 'fengmk2',
@@ -222,7 +210,7 @@ describe('test/index.test.js', function() {
       //  [ 56d2fe1e86d73ac4ce50a18a, 56d2fe1e86d73ac4ce50a18b ] }
     });
 
-    it('should call insert() throw error', function*() {
+    it('should call insert() throw error', function* () {
       let err;
       try {
         yield this.db.collection(collectionName).insert({

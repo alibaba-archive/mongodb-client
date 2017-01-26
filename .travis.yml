@@ -3,14 +3,14 @@ env:
   - npm_registry=https://registry.npmjs.com
 language: node_js
 node_js:
-  - '5'
+  - '7'
+  - '6'
   - '4'
 install:
   - curl https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.9.tgz | tar -zxv
   - mkdir -p ./data/db
   - nohup mongodb-linux-x86_64-3.0.9/bin/mongod --dbpath=./data/db --smallfiles > mongod.log 2>&1 &
-  - npm i npminstall
-  - npminstall
+  - npm i npminstall && npminstall
   - cat mongod.log
 script:
   - npm run ci
