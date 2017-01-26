@@ -11,7 +11,7 @@ db.on('error', err => {
 // wait for db connected
 db.ready(() => {
   // let's read and write
-  co(function*() {
+  co(function* () {
     const result = yield db.collection('user').insertMany([
       { name: 'fengmk2', type: 'JavaScript' },
       { name: 'dead-horse', type: 'JavaScript' },
@@ -19,7 +19,10 @@ db.ready(() => {
     ]);
     console.log(result);
 
-    const docs = yield db.collection('user').find({ type: 'JavaScript' }).skip(10).toArray();
+    const docs = yield db.collection('user')
+      .find({ type: 'JavaScript' })
+      .skip(10)
+      .toArray();
     console.log(docs);
   }).catch(err => {
     console.error(err);

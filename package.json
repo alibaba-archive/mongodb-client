@@ -7,27 +7,24 @@
     "lib"
   ],
   "scripts": {
-    "test": "npm run lint && mocha -t 5000 -r thunk-mocha test/*.test.js",
-    "test-local": "mocha -t 5000 -r thunk-mocha test/*.test.js",
-    "test-cov": "istanbul cover _mocha -- -t 5000 -r thunk-mocha test/*.test.js",
+    "test": "npm run lint && npm run test-local",
+    "test-local": "egg-bin test",
     "lint": "eslint lib test",
-    "ci": "npm run lint && npm run test-cov",
-    "autod": "autod -w --prefix '~'"
+    "ci": "npm run lint && egg-bin cov",
+    "autod": "autod -w --prefix '^'"
   },
   "dependencies": {
-    "mongodb": "^2.1.7",
-    "sdk-base": "^1.1.0",
-    "debug": "^2.2.0",
-    "depd": "^1.1.0"
+    "debug": "^2.6.0",
+    "depd": "^1.1.0",
+    "mongodb": "^2.2.22",
+    "sdk-base": "^3.0.1"
   },
   "devDependencies": {
     "autod": "*",
-    "eslint": "1",
-    "eslint-config-egg": "1",
-    "istanbul": "^0.4.2",
-    "mocha": "^2.4.5",
-    "thunk-mocha": "^1.0.3",
-    "co": "^4.6.0"
+    "co": "^4.6.0",
+    "egg-bin": "^2.0.2",
+    "eslint": "3",
+    "eslint-config-egg": "3"
   },
   "homepage": "https://github.com/node-modules/mongodb-client",
   "repository": {
