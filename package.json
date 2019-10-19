@@ -16,7 +16,7 @@
   "dependencies": {
     "debug": "^2.6.0",
     "depd": "^1.1.0",
-    "mongodb": "^2.2.22",
+    "mongodb": "^3.1.13",
     "sdk-base": "^3.0.1"
   },
   "devDependencies": {
